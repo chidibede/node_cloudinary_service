@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+//TODO: delete the image from cloudinary
+
 const CloudinaryImageDelete = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "DELETE") {
     const id = req.query;

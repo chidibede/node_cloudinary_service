@@ -1,4 +1,4 @@
-import cloudinaryConfig from "../utils/cloudinary";
+import cloudinaryConfig from "../utils/cloudinaryConfig";
 
 export const uploadImage = async ({
   path,

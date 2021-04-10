@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+//TODO:get the url from mongodb
+
 const CloudinaryImageUrl = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const { resource_id } = req.body;

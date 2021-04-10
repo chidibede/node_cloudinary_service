@@ -11,3 +11,12 @@ mongoose
   .catch((error) => {
     throw error;
   });
+
+const cloudinarySchema = new mongoose.Schema({
+  name: { type: String },
+  avatar: { type: String },
+  cloudinaryId: { type: String },
+  cloudinaryUrl: { type: String },
+});
+
+export default mongoose.model("Cloudinary", cloudinarySchema);
