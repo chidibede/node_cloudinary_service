@@ -1,14 +1,42 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { uploadImage } from "../../../src/services/image";
+import upload from "../../../src/utils/multerImageConfig";
 
-const CloudinaryImage = (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === "POST") {
-    const { image } = req.body;
-    return res.status(200).json({ status: "success", data: { image } });
-  } else {
+const runMiddleWare = (req, res, fn) => {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+      return resolve(result);
+    });
+  });
+};
+
+const CloudinaryImage = async (req, res) => {
+  await runMiddleWare(req, res, upload.single("image"));
+
+  try {
+    const { image, api_key, api_secret, cloud_name } = req.body;
+    console.log(req.file);
+    const response = await uploadImage({
+      path: req.file.path,
+      api_key,
+      api_secret,
+      cloud_name,
+    });
+    return res.status(200).json({ status: "success", data: { response } });
+  } catch (error) {
+    console.log(error);
     return res
-      .status(401)
-      .json({ status: "error", message: "invalid request method" });
+      .status(500)
+      .json({ status: "error", message: "something went wrong" });
   }
+};
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 };
 
 export default CloudinaryImage;
