@@ -7,7 +7,7 @@ const CloudinaryImage = async (req, res) => {
 
   try {
     const { api_key, api_secret, cloud_name } = req.body;
-    const { public_id, secure_url, format } = await uploadImage({
+    const { public_id, secure_url, format, cloudinary_name } = await uploadImage({
       path: req.file.path,
       api_key,
       api_secret,
@@ -16,7 +16,10 @@ const CloudinaryImage = async (req, res) => {
 
     return res
       .status(200)
-      .json({ status: "success", data: { public_id, secure_url, format } });
+      .json({
+        status: "success",
+        data: { public_id, secure_url, format, cloudinary_name },
+      });
   } catch (error) {
     return res
       .status(500)
